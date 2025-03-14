@@ -7,15 +7,45 @@ section .data
     no_roots_msg db "Уравнение ax^2 + bx + c = 0 не имеет действительных корней", 10, 0
     
     format_in db "%d", 0
+    error_msg db "Ошибка: введите целое число! Будет использовано значение 0.", 10, 0
+    clear_buffer_fmt db "%c", 0
 
 section .bss
     a resd 1  ; Коэффициент a
     b resd 1  ; Коэффициент b
     c resd 1  ; Коэффициент c
+    temp_char resb 1  ; Временная переменная для очистки буфера
 
 section .text
     global main
     extern printf, scanf
+
+; Функция для очистки буфера ввода
+clear_input_buffer:
+    push ebp
+    mov ebp, esp
+    
+.clear_loop:
+    ; Считываем один символ
+    push temp_char
+    push clear_buffer_fmt
+    call scanf
+    add esp, 8
+    
+    ; Проверяем результат scanf и символ на новую строку
+    cmp eax, 1
+    jne .end_clear
+    
+    mov al, [temp_char]
+    cmp al, 10          ; 10 = '\n'
+    je .end_clear
+    
+    jmp .clear_loop
+    
+.end_clear:
+    mov esp, ebp
+    pop ebp
+    ret
 
 main:
     ; Установка стекового фрейма
@@ -33,6 +63,22 @@ main:
     call scanf
     add esp, 8
     
+    ; Проверяем успешность считывания
+    cmp eax, 1
+    je .valid_a_input
+    
+    ; Обработка ошибки ввода
+    push error_msg
+    call printf
+    add esp, 4
+    
+    ; Очистка буфера ввода
+    call clear_input_buffer
+    
+    ; Устанавливаем значение по умолчанию
+    mov dword [a], 0
+
+.valid_a_input:
     ; Запрашиваем коэффициент b
     push prompt_b
     call printf
@@ -44,6 +90,22 @@ main:
     call scanf
     add esp, 8
     
+    ; Проверяем успешность считывания
+    cmp eax, 1
+    je .valid_b_input
+    
+    ; Обработка ошибки ввода
+    push error_msg
+    call printf
+    add esp, 4
+    
+    ; Очистка буфера ввода
+    call clear_input_buffer
+    
+    ; Устанавливаем значение по умолчанию
+    mov dword [b], 0
+
+.valid_b_input:
     ; Запрашиваем коэффициент c
     push prompt_c
     call printf
@@ -55,6 +117,22 @@ main:
     call scanf
     add esp, 8
     
+    ; Проверяем успешность считывания
+    cmp eax, 1
+    je .valid_c_input
+    
+    ; Обработка ошибки ввода
+    push error_msg
+    call printf
+    add esp, 4
+    
+    ; Очистка буфера ввода
+    call clear_input_buffer
+    
+    ; Устанавливаем значение по умолчанию
+    mov dword [c], 0
+
+.valid_c_input:
     ; Вычисляем дискриминант: D = b^2 - 4*a*c
     
     ; Вычисляем b^2
