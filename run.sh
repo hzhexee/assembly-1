@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Путь к корневой директории проекта
-PROJECT_DIR="/home/hzhex/AssemblyLesha"
+PROJECT_DIR="/home/yourdir"
 
 # Функция для отображения меню
 show_menu() {
@@ -29,31 +29,31 @@ run_task() {
     
     case $task_number in
         1)
-            task_dir="$PROJECT_DIR/N228++"
+            task_dir="$PROJECT_DIR/2.28"
             executable="./228"
             ;;
         2)
-            task_dir="$PROJECT_DIR/N326++"
+            task_dir="$PROJECT_DIR/3.26"
             executable="./326"
             ;;
         3)
-            task_dir="$PROJECT_DIR/N420++"
+            task_dir="$PROJECT_DIR/4.2"
             executable="./42"
             ;;
         4)
-            task_dir="$PROJECT_DIR/N480++"
+            task_dir="$PROJECT_DIR/4.8"
             executable="./48"
             ;;
         5)
-            task_dir="$PROJECT_DIR/N510++"
+            task_dir="$PROJECT_DIR/5.1"
             executable="./51"
             ;;
         6)
-            task_dir="$PROJECT_DIR/N527++"
+            task_dir="$PROJECT_DIR/5.27"
             executable="./527"
             ;;
         7)
-            task_dir="$PROJECT_DIR/N650++"
+            task_dir="$PROJECT_DIR/6.5"
             executable="./65"
             ;;
         *)
