@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Путь к корневой директории проекта
-PROJECT_DIR="/home/yourdir"
+PROJECT_DIR="$(pwd)/"
 
 # Функция для отображения меню
 show_menu() {
